@@ -14,3 +14,25 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// user protected routes
+Route::group(['middleware' => ['auth', 'user'], 'prefix' => 'user'], function () {
+    Route::get('/', 'HomeController@user')->name('user_dashboard');
+    Route::post('attendance', 'UserController@attendance')->name('attendance');
+    Route::post('absence', 'UserController@absence')->name('absence');
+
+});
+
+// admin protected routes
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+    Route::get('/', 'HomeController@admin')->name('admin_dashboard');
+    Route::get('student/create', 'AdminController@create');
+    Route::post('student/create', 'AdminController@store')->name('create');
+    Route::get('student/edit/{id}', 'AdminController@edit');
+    Route::post('student/update/{id}', 'AdminController@update')->name('update');
+    Route::get('student/delete/{id}', 'AdminController@destroy');
+    Route::get('studentlist', 'AdminController@listing')->name('listing');
+
+});
+
+Auth::routes();
