@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\AttendanceRecord;
+use Auth;
+use DB;
 
 class HomeController extends Controller
 {
@@ -25,12 +27,17 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        $record = AttendanceRecord::all();
+        $record = DB::table('users')
+        ->select('users.name','users.email','attendance_records.id','attendance_records.created_at', 'attendance_records.roll_call', 'attendance_records.ab_reason')
+        ->join('attendance_records','attendance_records.users_id','=','users.id')
+        ->get();
         return view('admin.index', compact('record'));
     }
 
     public function user()
     {
-        return view('user/index');
+        $user = Auth::user()->id;
+        $atts = AttendanceRecord::where('users_id', $user)->get();
+        return view('user.index', compact('atts'));
     }
 }

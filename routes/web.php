@@ -18,9 +18,7 @@ Route::get('/', function () {
 // user protected routes
 Route::group(['middleware' => ['auth', 'user'], 'prefix' => 'user'], function () {
     Route::get('/', 'HomeController@user')->name('user_dashboard');
-    Route::post('attendance', 'UserController@attendance')->name('attendance');
-    Route::post('absence', 'UserController@absence')->name('absence');
-
+    Route::resource('attendences', 'AttendenceController');
 });
 
 // admin protected routes

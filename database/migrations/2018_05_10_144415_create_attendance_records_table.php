@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttendentsTable extends Migration
+class CreateAttendanceRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,9 @@ class CreateAttendentsTable extends Migration
     {
         Schema::create('attendance_records', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_name');
-            $table->enum('status', ['attendance', 'absence']);
-            $table->text('reason');
+            $table->integer('users_id');
+            $table->string('roll_call');
+            $table->string('ab_reason')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateAttendentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_record');
+        Schema::dropIfExists('attendance_records');
     }
 }

@@ -15,7 +15,9 @@
                               <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th>Status</th>
+                                <th>Reason</th>
                                 <th>Date</th>
                               </tr>
                             </thead>
@@ -23,8 +25,10 @@
                             @foreach($record as $row)
                               <tr>
                                 <td>{{$row->id}}</td>
-                                <td>{{$row->user_name}}</td>
-                                <td>{{$row->status}}@if($row->reason != '-') beacuse {{$row->reason}}@endif</td>
+                                <td>{{$row->name}}</td>
+                                <td>{{$row->email}}</td>
+                                <td>{{$row->roll_call}}</td>
+                                <td>{{$row->ab_reason}}</td>
                                 <td>{{$row->created_at}}</td>
                               </tr>
                             @endforeach
